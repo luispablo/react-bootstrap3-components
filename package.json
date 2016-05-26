@@ -1,0 +1,32 @@
+{
+  "name": "react-bootstrap3-components",
+  "version": "1.0.0",
+  "description": "Some small and simple React components to reduce your bootstrap HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luispablo/react-bootstrap3-components.git"
+  },
+  "keywords": [
+    "react",
+    "bootstrap",
+    "helpers",
+    "components"
+  ],
+  "author": "@luispablo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luispablo/react-bootstrap3-components/issues"
+  },
+  "homepage": "https://github.com/luispablo/react-bootstrap3-components#readme",
+  "dependencies": {
+    "react": "^15.1.0",
+    "tape": "^4.5.1"
+  },
+  "devDependencies": {
+    "react-addons-test-utils": "^15.1.0"
+  }
+}
