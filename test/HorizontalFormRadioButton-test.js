@@ -13,7 +13,9 @@ test("lib/HorizontalFormRadioButton - renders", function (assert) {
 	shallowRenderer.render(React.createElement(HorizontalFormRadioButton, props));
 
 	var mainDiv = shallowRenderer.getRenderOutput();
+	var inputs = mainDiv.props.children[1].props.children.props.children;
 
 	assert.equal(mainDiv.type, "div", "The main HMTL object is a div");
+	assert.equal(inputs.length, 2, "Two inputs for sexes");
 	assert.end();
 });
