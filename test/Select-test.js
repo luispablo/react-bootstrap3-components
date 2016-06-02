@@ -37,22 +37,12 @@ test("lib/Select - nullValueLabel", function (assert) {
 	assert.end();
 });
 
-// var Select = require("react-bootstrap3-components").Select;
-//
-// var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
-//
-// var onChange = function (event) {
-// 	// do your React stuff here
-// };
-//
-// <Select options={options} onChange={onChange} nullValueLabel="- Sex -" />
-// ```
-//
-// This will render
-//
-// ```
-// <select class="form-control">
-//   <option>- Sex -</option>
-//   <option value="M">Male</option>
-//   <option value="F">Female</option>
-// </select>
+test("lib/Select - selected value", function (assert) {
+	shallowRenderer.render(React.createElement(Select, { options: sexes, onChange: onChange, selectedValue: sexes[1].value }));
+
+	var select = shallowRenderer.getRenderOutput();
+
+	assert.equal(select.props.defaultValue, sexes[1].value, "The defaultValue prop of React");
+	assert.end();
+
+});

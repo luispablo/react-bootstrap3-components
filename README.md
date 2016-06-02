@@ -29,7 +29,7 @@ var onChange = function (event) {
 	// do your React stuff here
 };
 
-<Select options={options} onChange={onChange} nullValueLabel="- Sex -" />
+<Select options={options} onChange={onChange} nullValueLabel="- Sex -" selectedValue="F" />
 ```
 
 This will render
@@ -38,6 +38,8 @@ This will render
 <select class="form-control">
   <option>- Sex -</option>
   <option value="M">Male</option>
-  <option value="F">Female</option>
+  <option selected="selected" value="F">Female</option>
 </select>
 ```
+
+It uses the React 'defaultValue' property for the select component.
