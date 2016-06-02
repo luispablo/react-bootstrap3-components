@@ -17,3 +17,27 @@ var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
 <HorizontalFormInput type="text" label="Name" value="Peter" labelWidth="3" inputWith="9" onChange={someFunc} />
 
 ```
+
+# <select> component
+
+```
+var Select = require("react-bootstrap3-components").Select;
+
+var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
+
+var onChange = function (event) {
+	// do your React stuff here
+};
+
+<Select options={options} onChange={onChange} nullValueLabel="- Sex -" />
+```
+
+This will render
+
+```
+<select class="form-control">
+  <option>- Sex -</option>
+  <option value="M">Male</option>
+  <option value="F">Female</option>
+</select>
+```
