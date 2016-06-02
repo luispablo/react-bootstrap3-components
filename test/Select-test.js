@@ -3,14 +3,14 @@ var React = require("react");
 var TestUtils = require("react-addons-test-utils");
 var Select = require("../lib/Select");
 
-var shallowRenderer = TestUtils.createRenderer();
+var renderer = TestUtils.createRenderer();
 var onChange = function (event) { };
-var sexes = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
+var sexes = [{label: "Female", value: "F"}, {label: "Male", value: "M"}];
 
 test("lib/Select - renders", function (assert) {
-	shallowRenderer.render(React.createElement(Select, { options: sexes, onChange: onChange }));
+	renderer.render(React.createElement(Select, { options: sexes, onChange: onChange }));
 
-	var select = shallowRenderer.getRenderOutput();
+	var select = renderer.getRenderOutput();
 	var options = select.props.children;
 
 	assert.equal(select.type, "select", "The main HMTL object is a select");
@@ -26,9 +26,9 @@ test("lib/Select - renders", function (assert) {
 test("lib/Select - nullValueLabel", function (assert) {
 	var nullValueLabel = "- Sex -";
 	var props = { options: sexes, onChange: onChange, nullValueLabel: nullValueLabel };
-	shallowRenderer.render(React.createElement(Select, props));
+	renderer.render(React.createElement(Select, props));
 
-	var select = shallowRenderer.getRenderOutput();
+	var select = renderer.getRenderOutput();
 	var options = select.props.children;
 
 	assert.equal(options.length, sexes.length + 1, "The nullValueLabel adds an option");
@@ -38,11 +38,29 @@ test("lib/Select - nullValueLabel", function (assert) {
 });
 
 test("lib/Select - selected value", function (assert) {
-	shallowRenderer.render(React.createElement(Select, { options: sexes, onChange: onChange, selectedValue: sexes[1].value }));
+	renderer.render(React.createElement(Select, { options: sexes, onChange: onChange, selectedValue: sexes[1].value }));
 
-	var select = shallowRenderer.getRenderOutput();
+	var select = renderer.getRenderOutput();
 
 	assert.equal(select.props.defaultValue, sexes[1].value, "The defaultValue prop of React");
 	assert.end();
+});
 
+test("lib/Select - value and label fields", function (assert) {
+	var people = [{id: 1, name: "Tom"}, {id: 2, name: "William"}];
+	renderer.render(React.createElement(Select, {options: people, onChange: onChange, valueField: "id", labelField: "name"}));
+	var options = renderer.getRenderOutput().props.children;
+	assert.equal(options[0].props.value, people[0].id, "The value is the ID");
+	assert.equal(options[0].props.children, people[0].name, "The label is the name");
+	assert.end();
+});
+
+test("lib/Select - order by label", function (assert) {
+	var people = [{id: 1, name: "Wilson"}, {id: 2, name: "Bewolf"}, {id: 3, name: "Alex"}];
+	renderer.render(React.createElement(Select, {options: people, onChange: onChange, valueField: "id", labelField: "name"}));
+	var options = renderer.getRenderOutput().props.children;
+	assert.equal(options[0].props.children, "Alex", "First the A");
+	assert.equal(options[1].props.children, "Bewolf", "Second the B");
+	assert.equal(options[2].props.children, "Wilson", "And last the W");
+	assert.end();
 });

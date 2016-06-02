@@ -32,14 +32,24 @@ var onChange = function (event) {
 <Select options={options} onChange={onChange} nullValueLabel="- Sex -" selectedValue="F" />
 ```
 
+Or you can just use an array of objects, and tell the component which fields you
+want to use as key, and which as value.
+
+```
+var people = [{id: 3, name: "William", lastname: "Wallace"}, {...}, ...];
+
+<Select options={people} valueField="id" labelField="name" onChange={onChange} />
+```
+
 This will render
 
 ```
 <select class="form-control">
   <option>- Sex -</option>
-  <option value="M">Male</option>
   <option selected="selected" value="F">Female</option>
+  <option value="M">Male</option>
 </select>
 ```
 
+The component will order the options by its label field by default (and you cannot change this for the moment)
 It uses the React 'defaultValue' property for the select component.
