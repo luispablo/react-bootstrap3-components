@@ -18,6 +18,20 @@ var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
 
 ```
 
+## HorizontalFormInputText
+
+```
+import { HorizontalFormInput } from "react-bootstrap3-components";
+
+<HorizontalFormInputText object={person} field="name" label="Name" widths={[3, 9]} />
+```
+
+This will generate an *input* HTML element, of type text. It will set the defaultValue
+of the input by taking the property *name* form the object *person*. The bootstrap HTML
+code generated will use 3 for the label witdth, and the prop *label* for its content,
+and 9 for the field width. And, finally, will set an onChange listener putting
+the value of event.target.value on the property *name* of the object *person*.
+
 # <select> component
 
 ```
