@@ -27,6 +27,23 @@ test("lib/HorizontalFormItem - renders", function (assert) {
 	assert.end();
 });
 
+test("lib/HorizontalFormItem - validation", function (assert) {
+	var input = React.createElement(InputText, { object: person, field: "name", placeholder: "Name" });
+	var validation = { state: "error", message: "Use only numbers and letters" };
+	var props = { label: "Name", labelWidth: 2, inputWidth: 10, validation: validation };
+	var hfi = React.createElement(HorizontalFormItem, props, input);
+	renderer.render(hfi);
+
+	var div = renderer.getRenderOutput();
+	var span = div.props.children[2];
+
+	assert.equal(div.props.className, "form-group has-error", "CSS class to mark a validation item");
+	assert.equal(span.type, "span", "The helper text block");
+	assert.equal(span.props.className, "help-block", "CSS class for helper block");
+	assert.equal(span.props.children, validation.message, "The validation message given");
+	assert.end();
+});
+
 test("lib/HorizontalFormItem - static", function (assert) {
 	var props = { label: "Name", staticValue: "Tom", labelWidth: 3, inputWidth: 9 };
 	var hfi = React.createElement(HorizontalFormItem, props);

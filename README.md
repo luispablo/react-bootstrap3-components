@@ -124,3 +124,17 @@ You can use the _static_ property to generate a static input component
 ```javascript
 <HorizontalFormItem label="Name" staticValue="Tom" labelWidth={3} inputWidth={9} />
 ```
+
+### Validation state
+
+You can provide validation info to build the Bootstrap validation state properties of this component (http://getbootstrap.com/css/#forms-control-validation)
+For example, with the InputText you should do:
+
+```javascript
+const validation = { state: "error", message: "Use only numbers and letters" };
+<HorizontalFormItem label="Name" labelWidth={3} inputWidth={9} validation={validation}>
+	<InputText object={person} field="name" />
+</HorizontalFormItem>
+```
+
+The state can be any of **success**, **warning** or **error**, and the message anything you like.
