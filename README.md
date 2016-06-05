@@ -1,69 +1,126 @@
 # react-bootstrap3-components
+
+| **IMPORTANT**: This docs apply to version 2.0.0 forward, as this version was a major change and doesn't get backwards compatibility. If you upgrade from 1.x to 2.x you have some work to do. |
+
 Some small and simple React components to reduce your bootstrap HTML
 
-# Usage
+# Available components
 
-```
-var HorizontalFormCheckbox = require("react-bootstrap3-components").HorizontalFormCheckbox;
-var HorizontalFormInput = require("react-bootstrap3-components").HorizontalFormInput;
-var HorizontalFormRadioButton = require("react-bootstrap3-components").HorizontalFormRadioButton;
-
-// and then
-
-var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
-
-<HorizontalFormRadioButton value="M" onChange={someFunc} label="Sex" labelWidth="3" inputWith="9" options={options} />
-<HorizontalFormCheckbox value={true} onChange={someFunc} label="Is this true?" labelWidth="3" inputWith="9" />
-<HorizontalFormInput type="text" label="Name" value="Peter" labelWidth="3" inputWith="9" onChange={someFunc} />
-
+```javascript
+import { InputText, Select, RadioButtons, CheckBox, Static } from "react-bootstrap3-components";
 ```
 
-## HorizontalFormInputText
+## InputText
 
-```
-import { HorizontalFormInput } from "react-bootstrap3-components";
-
-<HorizontalFormInputText object={person} field="name" label="Name" widths={[3, 9]} />
+```javascript
+<InputText object={person} field="name" placeholder="Name" />
 ```
 
 This will generate an *input* HTML element, of type text. It will set the defaultValue
-of the input by taking the property *name* form the object *person*. The bootstrap HTML
-code generated will use 3 for the label witdth, and the prop *label* for its content,
-and 9 for the field width. And, finally, will set an onChange listener putting
-the value of event.target.value on the property *name* of the object *person*.
+of the input by taking the property *name* form the object *person*. And it will
+set an onChange listener putting the value of event.target.value on the property
+*name* of the object *person*.
 
-# <select> component
+## Select
 
-```
-var Select = require("react-bootstrap3-components").Select;
+```javascript
+const person = { name: "John", gender: "M" };
+const genders = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
 
-var options = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
-
-var onChange = function (event) {
-	// do your React stuff here
-};
-
-<Select options={options} onChange={onChange} nullValueLabel="- Sex -" selectedValue="F" />
+<Select object={person} field="gender" options={genders} null="- Gender -" />
 ```
 
-Or you can just use an array of objects, and tell the component which fields you
-want to use as key, and which as value.
+The default value will be taken from *person.gender*. The options are built with
+the options array provided, and onChange the component will set *person.gender*
+with the value from *event.target.value*. The *null* property is the label to be
+used if you want to add a first option with null value.
 
-```
-var people = [{id: 3, name: "William", lastname: "Wallace"}, {...}, ...];
+If you want to provide an array of objects, and use certain fields as value and
+label, do this:
 
-<Select options={people} valueField="id" labelField="name" onChange={onChange} />
-```
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
 
-This will render
-
-```
-<select class="form-control">
-  <option>- Sex -</option>
-  <option selected="selected" value="F">Female</option>
-  <option value="M">Male</option>
-</select>
+<Select 	object={person} field="titleId" options={titles} null="- Title -"
+			optionsFields={{value: "id", label: "name"}}
+			onChange={e => person.titleId = parseInt(e.target.value)} />
 ```
 
-The component will order the options by its label field by default (and you cannot change this for the moment)
-It uses the React 'defaultValue' property for the select component.
+Here you provide your own *onChange* because you need to do something custom, parseInt.
+
+## RadioButtons
+
+```javascript
+const person = { name: "John", gender: "M" };
+const genders = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
+
+<RadioButton object={person} field="gender" options={genders} />
+```
+
+or, with custom fields for options labels and values
+
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
+
+<RadioButton	object={person} field="titleId" options={titles}
+					optionsFields={{value: "id", label: "name"}}
+					onChange={e => person.titleId = parseInt(e.target.value)} />
+```
+
+As in the Select, here you needed a custom _onChange_.
+
+The radio by default is not inline, if you want it to be inline, use the _inline_
+property.
+
+```javascript
+<RadioButton object={person} field="gender" options={genders} inline={true} />
+```
+
+## CheckBox
+
+```javascript
+const person = { name: "Tom", hasId: true };
+
+<CheckBox object={person} field="hasId" label="Has ID?" />
+
+```
+It's like the others, but with a checkbox...
+And, like the radio buttons you can set it as inline:
+
+```javascript
+<CheckBox object={person} field="hasId" label="Has ID?" inline={true} />
+```
+
+and you can override the _onChange_ event:
+
+```javascript
+<CheckBox object={person} field="hasId" label="Has ID?" onChange={e => person.hasId = e.target.checked} />
+```
+
+## HorizontalFormItem
+
+If you are building a Bootstrap form with CSS class *form-horizontal*
+(http://getbootstrap.com/css/#forms-horizontal), then you have the HorizontalForm
+wrapper. It will add a label to the components that need it (all except CheckBox)
+and the divs needed. You just set the widths.
+For example,
+
+```javascript
+import { HorizontalFormItem, InputText } from "react-bootstrap3-components";
+
+<HorizontalFormItem label="Name" labelWidth={3} inputWidth={9}>
+	<InputText object={person} field="name" />
+</HorizontalFormItem>
+```
+
+In this case you can ommit the _placeholder_ property for the InputText, and it
+will use the _label_ property of the HorizontalForm.
+
+You can use the _static_ property to generate a static input component
+(http://getbootstrap.com/css/#forms-controls-static) for the horizontal form.
+
+```javascript
+<HorizontalFormItem label="Name" staticValue="Tom" labelWidth={3} inputWidth={9} />
+```

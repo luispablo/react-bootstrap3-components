@@ -1,10 +1,11 @@
 {
   "name": "react-bootstrap3-components",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "description": "Some small and simple React components to reduce your bootstrap HTML",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | faucet"
+    "test": "tape test/*.js test/horizontalForm/*.js | faucet",
+	 "lint": "eslint *.js lib/*.js"
   },
   "repository": {
     "type": "git",

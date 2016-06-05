@@ -5,62 +5,56 @@ var Select = require("../lib/Select");
 
 var renderer = TestUtils.createRenderer();
 var onChange = function (event) { };
-var sexes = [{label: "Female", value: "F"}, {label: "Male", value: "M"}];
+var titles = [ {id: 1, name: "Mr."}, {id: 2, name: "Mrs."}];
+var person = { name: "John", gender: "M", titleId: 1 };
+var genders = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
 
 test("lib/Select - renders", function (assert) {
-	renderer.render(React.createElement(Select, { options: sexes, onChange: onChange }));
+	var selectProps = {object: person, field: "gender", options: genders, null: "- Gender -" };
+	renderer.render(React.createElement(Select, selectProps));
 
 	var select = renderer.getRenderOutput();
 	var options = select.props.children;
 
 	assert.equal(select.type, "select", "The main HMTL object is a select");
 	assert.equal(select.props.className, "form-control", "Bootstrap CSS class");
-	assert.equal(select.props.onChange, onChange, "The onChange event function");
-	assert.equal(options.length, sexes.length, "Each option has an element");
+	assert.equal(options.length, genders.length + 1, "Each option has an element");
 	assert.equal(options[0].type, "option", "Each child is an option");
-	assert.equal(options[0].props.value, sexes[0].value, "The value is set");
-	assert.equal(options[0].props.children, sexes[0].label, "The label is set");
-	assert.end();
-});
-
-test("lib/Select - nullValueLabel", function (assert) {
-	var nullValueLabel = "- Sex -";
-	var props = { options: sexes, onChange: onChange, nullValueLabel: nullValueLabel };
-	renderer.render(React.createElement(Select, props));
-
-	var select = renderer.getRenderOutput();
-	var options = select.props.children;
-
-	assert.equal(options.length, sexes.length + 1, "The nullValueLabel adds an option");
-	assert.ok(options[0].value === undefined, "The first option has no value defined");
-	assert.equal(options[0].props.children, nullValueLabel, "The label is set in the first option");
-	assert.end();
-});
-
-test("lib/Select - selected value", function (assert) {
-	renderer.render(React.createElement(Select, { options: sexes, onChange: onChange, selectedValue: sexes[1].value }));
-
-	var select = renderer.getRenderOutput();
-
-	assert.equal(select.props.defaultValue, sexes[1].value, "The defaultValue prop of React");
+	assert.equal(options[0].props.children, selectProps.null, "The null option label");
+	assert.equal(options[1].props.value, genders[1].value, "The value is set");
+	assert.equal(options[1].props.children, genders[1].label, "The label is set");
+	assert.equal(select.props.defaultValue, person.gender, "The defaultValue prop is set");
 	assert.end();
 });
 
 test("lib/Select - value and label fields", function (assert) {
-	var people = [{id: 1, name: "Tom"}, {id: 2, name: "William"}];
-	renderer.render(React.createElement(Select, {options: people, onChange: onChange, valueField: "id", labelField: "name"}));
-	var options = renderer.getRenderOutput().props.children;
-	assert.equal(options[0].props.value, people[0].id, "The value is the ID");
-	assert.equal(options[0].props.children, people[0].name, "The label is the name");
+	var selectProps = {
+		object: person, field: "titleId", options: titles,
+		optionsFields: {value: "id", label: "name"},
+		onChange: function (e) { person.titleId = parseInt(e.target.value) }
+	};
+	renderer.render(React.createElement(Select, selectProps));
+
+	var select = renderer.getRenderOutput();
+	var options = select.props.children;
+
+	assert.equal(options[0].props.value, titles[0].id, "The value is the ID");
+	assert.equal(options[0].props.children, titles[0].name, "The label is the name");
+
+	select.props.onChange({ target: { value: "2" }});
+
+	assert.equal(person.titleId, 2, "The title ID is changed");
 	assert.end();
 });
 
 test("lib/Select - order by label", function (assert) {
-	var people = [{id: 1, name: "Wilson"}, {id: 2, name: "Bewolf"}, {id: 3, name: "Alex"}];
-	renderer.render(React.createElement(Select, {options: people, onChange: onChange, valueField: "id", labelField: "name"}));
+	var selectProps = {object: person, field: "gender", options: genders, null: "- Gender -" };
+	renderer.render(React.createElement(Select, selectProps));
+
 	var options = renderer.getRenderOutput().props.children;
-	assert.equal(options[0].props.children, "Alex", "First the A");
-	assert.equal(options[1].props.children, "Bewolf", "Second the B");
-	assert.equal(options[2].props.children, "Wilson", "And last the W");
+
+	assert.equal(options[0].props.children, selectProps.null, "First the -");
+	assert.equal(options[1].props.children, "Female", "Second the F");
+	assert.equal(options[2].props.children, "Male", "Last the M");
 	assert.end();
 });
