@@ -35,7 +35,7 @@ test("lib/HorizontalFormItem - validation", function (assert) {
 	renderer.render(hfi);
 
 	var div = renderer.getRenderOutput();
-	var span = div.props.children[2];
+	var span = div.props.children[1].props.children[1];
 
 	assert.equal(div.props.className, "form-group has-error", "CSS class to mark a validation item");
 	assert.equal(span.type, "span", "The helper text block");
@@ -50,7 +50,7 @@ test("lib/HorizontalFormItem - static", function (assert) {
 	renderer.render(hfi);
 
 	var div = renderer.getRenderOutput();
-	var p = div.props.children[1].props.children;
+	var p = div.props.children[1].props.children[0];
 
 	assert.equal(p.type, "p", "It has a paragraph");
 	assert.equal(p.props.className, "form-control-static", "The p CSS class");
