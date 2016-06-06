@@ -1,14 +1,14 @@
 var test = require("tape");
 var React = require("react");
 var TestUtils = require("react-addons-test-utils");
-var InputText = require("../lib/InputText");
+var Input = require("../lib/Input");
 var HorizontalFormItem = require("../lib/HorizontalFormItem");
 
 var renderer = TestUtils.createRenderer();
 var person = { name: "Tom" };
 
 test("lib/HorizontalFormItem - renders", function (assert) {
-	var input = React.createElement(InputText, { object: person, field: "name", placeholder: "Name" });
+	var input = React.createElement(Input, { type: "text", object: person, field: "name", placeholder: "Name" });
 	var props = { label: "Name", labelWidth: 2, inputWidth: 10 };
 	var hfi = React.createElement(HorizontalFormItem, props, input);
 	renderer.render(hfi);
@@ -28,7 +28,7 @@ test("lib/HorizontalFormItem - renders", function (assert) {
 });
 
 test("lib/HorizontalFormItem - validation", function (assert) {
-	var input = React.createElement(InputText, { object: person, field: "name", placeholder: "Name" });
+	var input = React.createElement(Input, { type: "text", object: person, field: "name", placeholder: "Name" });
 	var validation = { state: "error", message: "Use only numbers and letters" };
 	var props = { label: "Name", labelWidth: 2, inputWidth: 10, validation: validation };
 	var hfi = React.createElement(HorizontalFormItem, props, input);

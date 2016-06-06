@@ -7,19 +7,16 @@ Some small and simple React components to reduce your bootstrap HTML
 # Available components
 
 ```javascript
-import { InputText, Select, RadioButtons, CheckBox, Static } from "react-bootstrap3-components";
+import { Input, Select, RadioButtons, CheckBox, Static } from "react-bootstrap3-components";
 ```
 
-## InputText
+## Input
 
 ```javascript
-<InputText object={person} field="name" placeholder="Name" />
+<Input object={person} field="name" type="text" placeholder="Name" />
 ```
 
-This will generate an *input* HTML element, of type text. It will set the defaultValue
-of the input by taking the property *name* form the object *person*. And it will
-set an onChange listener putting the value of event.target.value on the property
-*name* of the object *person*.
+This will generate an *input* HTML element, of type text. It will set the defaultValue of the input by taking the property *name* form the object *person*. And it will set an onChange listener putting the value of event.target.value on the property *name* of the object *person*. The **type** property is the HTML input element type property, so any value valida there is valid here.
 
 ## Select
 
@@ -111,7 +108,7 @@ For example,
 import { HorizontalFormItem, InputText } from "react-bootstrap3-components";
 
 <HorizontalFormItem label="Name" labelWidth={3} inputWidth={9}>
-	<InputText object={person} field="name" />
+	<Input type="text" object={person} field="name" />
 </HorizontalFormItem>
 ```
 
@@ -133,7 +130,7 @@ For example, with the InputText you should do:
 ```javascript
 const validation = { state: "error", message: "Use only numbers and letters" };
 <HorizontalFormItem label="Name" labelWidth={3} inputWidth={9} validation={validation}>
-	<InputText object={person} field="name" />
+	<Input type="text" object={person} field="name" />
 </HorizontalFormItem>
 ```
 
