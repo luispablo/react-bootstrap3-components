@@ -23,12 +23,13 @@ test("lib/RadioButtons - renders", function (assert) {
 	var label0 = renderer.getRenderOutput();
 
 	assert.equal(label0.props.className, "radio-inline", "The CSS class");
-	assert.equal(label0.props.children[1], genders[0].label, "The label");
+	assert.equal(label0.props.children[1], genders[0].label + " ", "The label");
 
 	var input0 = label0.props.children[0];
 	assert.equal(input0.type, "input", "Input element");
 	assert.equal(input0.props.name, props.field, "The name is the field");
 	assert.equal(input0.props.value, genders[0].value, "The input 0 value");
+	assert.ok(input0.props.defaultChecked, "This is the value selected by default");
 
 	input0.props.onChange({ target: { value: "O" }});
 
@@ -67,7 +68,7 @@ test("lib/RadioButtons - with custom value and label", function (assert) {
 	renderer.render(labels[0]);
 	var label0 = renderer.getRenderOutput();
 
-	assert.equal(label0.props.children[1], titles[0].name, "The label is the name");
+	assert.equal(label0.props.children[1], titles[0].name + " ", "The label is the name");
 	assert.equal(label0.props.children[0].props.value, titles[0].id, "The ID is the value");
 	assert.end();
 });
