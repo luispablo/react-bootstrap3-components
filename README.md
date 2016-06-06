@@ -135,3 +135,26 @@ const validation = { state: "error", message: "Use only numbers and letters" };
 ```
 
 The state can be any of **success**, **warning** or **error**, and the message anything you like.
+
+## Icon
+
+This is to simplify the use of Bootstrap Glyphicons.
+
+```javascript
+import { Icon } from "react-bootstrap3-components";
+
+<Icon name="search" />
+```
+
+The **name** is used to generate the CSS class, using the prefix _glyphicon glyphicon-_ and then the name you provided. So, in the example, it would generate:
+
+```html
+<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+```
+
+and you have a **visible** helper, where you can pass a boolean condition, and it will return the component if true, or null otherwise.
+
+```javascript
+const condition = year < 2000;
+<Icon name="ok" visible={condition} />
+```
