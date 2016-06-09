@@ -4,6 +4,7 @@ var Input = require("./lib/Input");
 var RadioButtons = require("./lib/RadioButtons");
 var Select = require("./lib/Select");
 var Icon = require("./lib/Icon");
+var SortableTH = require("./lib/SortableTH");
 
 var index = {
 	CheckBox: CheckBox,
@@ -11,7 +12,8 @@ var index = {
 	Input: Input,
 	RadioButtons: RadioButtons,
 	Select: Select,
-	Icon: Icon
+	Icon: Icon,
+	SortableTH: SortableTH
 };
 
 module.exports = index;

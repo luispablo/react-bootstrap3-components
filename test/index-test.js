@@ -6,6 +6,7 @@ var Select = require("../lib/Select");
 var HorizontalFormItem = require("../lib/HorizontalFormItem");
 var Icon = require("../lib/Icon");
 var index = require("../index");
+var SortableTH = require("../lib/SortableTH");
 
 test("index - exports", function (assert) {
 	assert.equal(index.CheckBox, CheckBox, "require CheckBox");
@@ -14,5 +15,6 @@ test("index - exports", function (assert) {
 	assert.equal(index.HorizontalFormItem, HorizontalFormItem, "require HorizontalFormItem");
 	assert.equal(index.Select, Select, "require Select");
 	assert.equal(index.Icon, Icon, "require Icon");
+	assert.equal(index.SortableTH, SortableTH, "require SortableTH");
 	assert.end();
 });

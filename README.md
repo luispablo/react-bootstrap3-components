@@ -158,3 +158,27 @@ and you have a **visible** helper, where you can pass a boolean condition, and i
 const condition = year < 2000;
 <Icon name="ok" visible={condition} />
 ```
+
+## SortableTH
+
+If you have a table, this component builds a custom TH, with the CSS class **sortable**, or any other that you can specify with the **className** property. It's clickable (you should add ```cursor: pointer``` in its CSS, it doesn't do it for you) and it adds the Bootstrap glyphicon-triangle-top or glyphicon-triangle-bottom when it's order by this field.
+
+```javascript
+import { SortableTH } from "react-bootstrap3-components";
+
+var currentOrderBy = "name DESC";
+
+var changeOrder = function (newOrderBy) {
+	currentOrderBy = newOrderBy;
+	// and to whatever you want with it...
+};
+
+<SortableTH label="Last Name" field="lastName" orderBy={currentOrderBy} onClick={changeOrder} />
+// The TH will have 'sortable' as CSS class
+
+// or use a custom one
+<SortableTH className="customSortable" label="Last Name" field="lastName" orderBy={currentOrderBy} onClick={changeOrder} />
+
+```
+
+The **label** is what the TH is going to have as text inside. The **field** property is the value it's going to use to build the new order by criteria in the **onClick** function, watching the value in its **orderBy** property. If the **orderBy** has the field in it 'lastName ASC' or 'lastName DESC' has 'lastName' in it, the component will change the direction. If it's 'lastName ASC', it will call **changeOrder** with 'lastName DESC' and viceversa. If it's not the current order by it will use ASC the first time.
