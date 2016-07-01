@@ -18,6 +18,14 @@ import { Input, Select, RadioButtons, CheckBox, Static } from "react-bootstrap3-
 
 This will generate an *input* HTML element, of type text. It will set the defaultValue of the input by taking the property *name* form the object *person*. And it will set an onChange listener putting the value of event.target.value on the property *name* of the object *person*. The **type** property is the HTML input element type property, so any value valida there is valid here.
 
+### onChange
+
+You may override the default ```onChange``` method to provide your own:
+
+```javascript
+<Input object={person} field="name" type="text" onChange={newValue => console.log("the new value is" + newValue)} />
+```
+
 ## Select
 
 ```javascript

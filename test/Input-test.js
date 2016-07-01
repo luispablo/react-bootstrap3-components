@@ -22,6 +22,16 @@ test("lib/Input - renders", function (assert) {
 	assert.end();
 });
 
+test("lib/Input - custom onChange", function (assert) {
+	var a = 1;
+	var onChange = function (newValue) { a = newValue; };
+	renderer.render(React.createElement(Input, { type: "text", object: person, field: "name", onChange: onChange }));
+	var input = renderer.getRenderOutput();
+	input.props.onChange({ target: { value: 2 }});
+	assert.equal(a, 2, "The value should have changed");
+	assert.end();
+});
+
 test("lib/Input - type number", function (assert) {
 	renderer.render(React.createElement(Input, { type: "number", object: person, field: "name", placeholder: "Name" }));
 	var input = renderer.getRenderOutput();
