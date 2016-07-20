@@ -3,10 +3,10 @@ var React = require("react");
 var TestUtils = require("react-addons-test-utils");
 var CheckBox = require("../lib/CheckBox");
 
-var renderer = TestUtils.createRenderer();
-var person = { name: "Tom", hasId: true };
+var person = { name: "Tom", hasId: true, isActive: "TRUE" };
 
 test("lib/CheckBox - renders", function (assert) {
+	var renderer = TestUtils.createRenderer();
 	var props = { object: person, field: "hasId", label: "Has ID?" };
 	renderer.render(React.createElement(CheckBox, props));
 
@@ -22,13 +22,11 @@ test("lib/CheckBox - renders", function (assert) {
 	assert.equal(label.type, "label", "Label HTML element");
 	assert.equal(label.props.children[0].type, "input", "The first child is the input");
 	assert.equal(label.props.children[2], props.label, "The third is the label");
-
-	label.props.children[0].props.onChange({ target: { checked: false }});
-	assert.notOk(person.hasId, "Now it hasn't got ID");
 	assert.end();
 });
 
 test("lib/CheckBox - inline", function (assert) {
+	var renderer = TestUtils.createRenderer();
 	var props = { object: person, field: "hasId", label: "Has ID?", inline: true };
 	renderer.render(React.createElement(CheckBox, props));
 	var Label = renderer.getRenderOutput();
@@ -40,18 +38,66 @@ test("lib/CheckBox - inline", function (assert) {
 	assert.end();
 });
 
-test("lib/CheckBox - override onChange", function (assert) {
-	var _onChange = function (e) { person.hasId = e.target.checked ? "t" : "f" };
-	var props = { object: person, field: "hasId", label: "Has ID?", onChange: _onChange };
+test("lib/CheckBox - uses ALL provided props", function (assert) {
+	var renderer = TestUtils.createRenderer();
+	var props = { object: person, field: "hasId", label: "Has ID?", autoFocus: true };
 	renderer.render(React.createElement(CheckBox, props));
+	var checkbox = renderer.getRenderOutput();
 
+	assert.ok(checkbox.props.autoFocus, "Has the autoFocus set");
+	assert.end();
+});
+
+test("lib/CheckBox - true / false mappings", function (assert) {
+	var renderer = TestUtils.createRenderer();
+	var props = { object: person, field: "isActive", label: "Is active?", mappings: { true: "TRUE", false: "FALSE" } };
+	assert.plan(1);
+	props.onChangeValue = function (newValue) {
+		assert.equal(newValue, "FALSE", "Returns the mapping value");
+	};
+	renderer.render(React.createElement(CheckBox, props));
 	var Div = renderer.getRenderOutput();
 	renderer.render(Div);
 	var div = renderer.getRenderOutput();
 	renderer.render(div.props.children);
 	var label = renderer.getRenderOutput();
-	label.props.children[0].props.onChange({ target: { checked: false }});
 
-	assert.equal(person.hasId, "f", "hasId now should be f");
-	assert.end();
+	label.props.children[0].props.onChange({ target: { checked: false }});
+});
+
+test("lib/CheckBox - onChangeObject", function (assert) {
+	var renderer = TestUtils.createRenderer();
+	var props = { object: person, field: "hasId", label: "Has ID?" };
+	assert.plan(2);
+	props.onChangeObject = function (newPerson) {
+		assert.notDeepEqual(person, newPerson, "The given object mustn't be changed");
+		assert.notOk(newPerson.hasId, "The new person shouldn't have ID");
+	};
+
+	renderer.render(React.createElement(CheckBox, props));
+	var Div = renderer.getRenderOutput();
+	renderer.render(Div);
+	var div = renderer.getRenderOutput();
+	renderer.render(div.props.children);
+	var label = renderer.getRenderOutput();
+
+	label.props.children[0].props.onChange({ target: { checked: false }});
+});
+
+test("lib/CheckBox - onChangeValue", function (assert) {
+	var renderer = TestUtils.createRenderer();
+	var props = { object: person, field: "hasId", label: "Has ID?" };
+	assert.plan(1);
+	props.onChangeValue = function (newValue) {
+		assert.notOk(newValue, "The new value is false");
+	};
+
+	renderer.render(React.createElement(CheckBox, props));
+	var Div = renderer.getRenderOutput();
+	renderer.render(Div);
+	var div = renderer.getRenderOutput();
+	renderer.render(div.props.children);
+	var label = renderer.getRenderOutput();
+
+	label.props.children[0].props.onChange({ target: { checked: false }});
 });

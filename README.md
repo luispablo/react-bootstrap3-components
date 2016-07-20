@@ -54,7 +54,7 @@ Bare in mind that only the **last** changing event will get fired. If you type t
 // The onChangeHandler will be debounced 300 milliseconds here
 ```
 
-## Select
+### Select
 
 ```javascript
 const person = { name: "John", gender: "M" };
@@ -82,7 +82,7 @@ const person = {name: "Tom", titleId: 1};
 
 Here you provide your own *onChange* because you need to do something custom, parseInt.
 
-## RadioButtons
+### RadioButtons
 
 ```javascript
 const person = { name: "John", gender: "M" };
@@ -111,14 +111,14 @@ property.
 <RadioButton object={person} field="gender" options={genders} inline={true} />
 ```
 
-## CheckBox
+### CheckBox
 
 ```javascript
 const person = { name: "Tom", hasId: true };
 
 <CheckBox object={person} field="hasId" label="Has ID?" />
-
 ```
+
 It's like the others, but with a checkbox...
 And, like the radio buttons you can set it as inline:
 
@@ -126,13 +126,47 @@ And, like the radio buttons you can set it as inline:
 <CheckBox object={person} field="hasId" label="Has ID?" inline={true} />
 ```
 
-and you can override the _onChange_ event:
+#### Mappings (true / false values)
+
+If the field has values instead of a boolean, i.e.: "t" or "f" strings, or 0 or 1 numbers, you can map those values to use them.
 
 ```javascript
-<CheckBox object={person} field="hasId" label="Has ID?" onChange={e => person.hasId = e.target.checked} />
+const person = { name: "Tom", hasId: "t" };
+
+<CheckBox object={person} field="hasId" label="Has ID?" mappings={{true: "t", false: "f"}} />
 ```
 
-## HorizontalFormItem
+#### onChange
+
+Like the **Input** component, you have two observable events:
+
+##### onChangeObject
+
+```javascript
+const person = { name: "Tom", hasId: true };
+
+const onChangeObject = function (newPerson) {
+	// You have the person object with the field hasId already updated
+};
+
+<CheckBox object={person} field="hasId" label="Has ID?" onChangeObject={onChangeObject}/>
+```
+
+##### onChangeValue
+
+If you have mappings, you can use this or the previous case with them
+
+```javascript
+const person = { name: "Tom", hasId: "t" };
+
+const onChangeValue = function (newHasId) {
+	// You will get either "t" or "f"
+};
+
+<CheckBox object={person} field="hasId" label="Has ID?" mappings={{true: "t", false: "f"}} onChangeValue={onChangeValue} />
+```
+
+### HorizontalFormItem
 
 If you are building a Bootstrap form with CSS class *form-horizontal*
 (http://getbootstrap.com/css/#forms-horizontal), then you have the HorizontalForm
@@ -158,7 +192,7 @@ You can use the _static_ property to generate a static input component
 <HorizontalFormItem label="Name" staticValue="Tom" labelWidth={3} inputWidth={9} />
 ```
 
-### Validation state
+#### Validation state
 
 You can provide validation info to build the Bootstrap validation state properties of this component (http://getbootstrap.com/css/#forms-control-validation)
 For example, with the InputText you should do:
@@ -172,7 +206,7 @@ const validation = { state: "error", message: "Use only numbers and letters" };
 
 The state can be any of **success**, **warning** or **error**, and the message anything you like.
 
-## Icon
+### Icon
 
 This is to simplify the use of Bootstrap Glyphicons.
 
@@ -195,7 +229,7 @@ const condition = year < 2000;
 <Icon name="ok" visible={condition} />
 ```
 
-## SortableTH
+### SortableTH
 
 If you have a table, this component builds a custom TH, with the CSS class **sortable**, or any other that you can specify with the **className** property. It's clickable (you should add ```cursor: pointer``` in its CSS, it doesn't do it for you) and it adds the Bootstrap glyphicon-triangle-top or glyphicon-triangle-bottom when it's order by this field.
 
