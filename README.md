@@ -1,29 +1,57 @@
 # react-bootstrap3-components
 
-| **IMPORTANT**: This docs apply to version 2.0.0 forward, as this version was a major change and doesn't get backwards compatibility. If you upgrade from 1.x to 2.x you have some work to do. |
+**IMPORTANT: This docs apply to version 2.0.0 forward, as this version was a major change and doesn't get backwards compatibility. If you upgrade from 1.x to 2.x you have some work to do.**
+
+## Description
 
 Some small and simple React components to reduce your bootstrap HTML
 
-# Available components
+## Available components
 
 ```javascript
-import { Input, Select, RadioButtons, CheckBox, Static } from "react-bootstrap3-components";
+import {
+	Input, Select, RadioButtons, CheckBox, Static
+} from "react-bootstrap3-components";
 ```
 
-## Input
+### Input
 
 ```javascript
-<Input object={person} field="name" type="text" placeholder="Name" />
+var person = { name: "Tom", age: 50 };
+
+<Input object={person} field="name" type="text" ...any other React prop />
 ```
 
-This will generate an *input* HTML element, of type text. It will set the defaultValue of the input by taking the property *name* form the object *person*. And it will set an onChange listener putting the value of event.target.value on the property *name* of the object *person*. The **type** property is the HTML input element type property, so any value valida there is valid here.
+This will generate an *input* HTML element, of type text. It will behave as a controlled input, using its own state to preserve the input value. After the first three mandatory fields, you can provide any of the other React valid props.
 
-### onChange
+#### onChange
 
-You may override the default ```onChange``` method to provide your own:
+You can either use ```onChangeObject``` or ```onChangeValue``` to get the whole person object with its value changed, or only the new value set.
 
 ```javascript
-<Input object={person} field="name" type="text" onChange={newValue => console.log("the new value is" + newValue)} />
+var personChanged = function (newPerson) {
+	// You have the whole person with the new name already set
+};
+
+<Input object={person} field="name" type="text" onChangeObject={personChanged} />
+```
+
+```javascript
+var nameChanged = function (newName) {
+	// Here you only get the new typed value
+};
+
+<Input object={person} field="name" type="text" onChangeValue={nameChanged} />
+```
+
+#### debounce!!!
+
+If you have performance issues like me, you may _debounce_ the onChange event. Preventing each keystroke to fire the onChange listener (any of them) You only have to provide the wait time to use as debounce parameter.
+Bare in mind that only the **last** changing event will get fired. If you type too fast and enter 10 letters before the onChange gets fired, it will get fired only once, with that last value set.
+
+```javascript
+<Input object={person} field="name" type="text" onChangeObject={onChangeHandler} wait={300} />
+// The onChangeHandler will be debounced 300 milliseconds here
 ```
 
 ## Select
