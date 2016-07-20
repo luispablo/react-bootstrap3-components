@@ -98,11 +98,8 @@ const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
 const person = {name: "Tom", titleId: 1};
 
 <RadioButton	object={person} field="titleId" options={titles}
-					optionsFields={{value: "id", label: "name"}}
-					onChange={e => person.titleId = parseInt(e.target.value)} />
+					optionsFields={{value: "id", label: "name"}} />
 ```
-
-As in the Select, here you needed a custom _onChange_.
 
 The radio by default is not inline, if you want it to be inline, use the _inline_
 property.
@@ -110,6 +107,40 @@ property.
 ```javascript
 <RadioButton object={person} field="gender" options={genders} inline={true} />
 ```
+
+#### onChangeObject
+
+You can get the object with the field alread updated with this property. It will set the **value** property of the selected object, or the specified field in the **optionsFields** property.
+
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
+const onChangeObject = function (newPerson) {
+	// You get a new person object with the title updated
+};
+
+<RadioButton	object={person} field="titleId" options={titles}
+					optionsFields={{value: "id", label: "name"}}
+					onChangeObject={onChangeObject} />
+```
+
+#### onChangeValue
+
+Or just get the new value
+
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
+const onChangeValue = function (newValue) {
+	// You get the new value selected
+};
+
+<RadioButton	object={person} field="titleId" options={titles}
+					optionsFields={{value: "id", label: "name"}}
+					onChangeValue={onChangeValue} />
+```
+
+You get the whole option, not just the **value** field (or its **optionsFields** counterpart)
 
 ### CheckBox
 
