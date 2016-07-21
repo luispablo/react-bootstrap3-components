@@ -25,6 +25,36 @@ test("lib/CheckBox - renders", function (assert) {
 	assert.end();
 });
 
+test("lib/CheckBox - checked value with mappings", function (assert) {
+	var props = { object: person, field: "isActive", label: "Is active?", mappings: { true: "TRUE", false: "FALSE" } };
+
+	var renderer = TestUtils.createRenderer();
+	renderer.render(React.createElement(CheckBox, props));
+	var Div = renderer.getRenderOutput();
+	renderer.render(Div);
+	var div = renderer.getRenderOutput();
+	renderer.render(div.props.children);
+	var inputCheckbox = renderer.getRenderOutput().props.children[0];
+
+	assert.equal(inputCheckbox.props.checked, true, "It must be checked");
+	assert.end();
+});
+
+test("lib/CheckBox - unchecked value with mappings", function (assert) {
+	var props = { object: person, field: "isActive", label: "Is active?", mappings: { true: "FALSE", false: "TRUE" } };
+
+	var renderer = TestUtils.createRenderer();
+	renderer.render(React.createElement(CheckBox, props));
+	var Div = renderer.getRenderOutput();
+	renderer.render(Div);
+	var div = renderer.getRenderOutput();
+	renderer.render(div.props.children);
+	var inputCheckbox = renderer.getRenderOutput().props.children[0];
+
+	assert.equal(inputCheckbox.props.checked, false, "It mustn't be checked");
+	assert.end();
+});
+
 test("lib/CheckBox - inline", function (assert) {
 	var renderer = TestUtils.createRenderer();
 	var props = { object: person, field: "hasId", label: "Has ID?", inline: true };
