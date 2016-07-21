@@ -71,16 +71,39 @@ used if you want to add a first option with null value.
 If you want to provide an array of objects, and use certain fields as value and
 label, do this:
 
+#### onChangeObject
+
+Same as in Input component.
+
 ```javascript
 const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
 const person = {name: "Tom", titleId: 1};
 
+const onChangeObject = function (newPerson) {
+	// newPerson is a new object with titleId field updated to new value
+};
+
 <Select 	object={person} field="titleId" options={titles} null="- Title -"
 			optionsFields={{value: "id", label: "name"}}
-			onChange={e => person.titleId = parseInt(e.target.value)} />
+			onChangeObject={onChangeObject} />
 ```
 
-Here you provide your own *onChange* because you need to do something custom, parseInt.
+#### onChangeValue
+
+Same as in Input component.
+
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
+
+const onChangeValue = function (newTileId) {
+	// Pretty obvious...
+};
+
+<Select 	object={person} field="titleId" options={titles} null="- Title -"
+			optionsFields={{value: "id", label: "name"}}
+			onChangeValue={onChangeValue} />
+```
 
 ### RadioButtons
 
