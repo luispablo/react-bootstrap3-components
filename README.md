@@ -306,3 +306,13 @@ var changeOrder = function (newOrderBy) {
 ```
 
 The **label** is what the TH is going to have as text inside. The **field** property is the value it's going to use to build the new order by criteria in the **onClick** function, watching the value in its **orderBy** property. If the **orderBy** has the field in it 'lastName ASC' or 'lastName DESC' has 'lastName' in it, the component will change the direction. If it's 'lastName ASC', it will call **changeOrder** with 'lastName DESC' and viceversa. If it's not the current order by it will use ASC the first time.
+
+#### enabled / disabled
+
+You can specify the boolean property **enabled** to apply the styling and add the onClick event or not.
+
+```javascript
+var enableOrdering = items && items.length > 0;
+
+<SortableTH label="Last Name" field="lastName" orderBy={currentOrderBy} onClick={changeOrder} enabled={enableOrdering} />
+```

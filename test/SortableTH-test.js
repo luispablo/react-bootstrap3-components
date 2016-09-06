@@ -1,7 +1,9 @@
 var test = require("tape");
 var React = require("react");
+var ReactDOM = require("react-dom");
 var TestUtils = require("react-addons-test-utils");
 var SortableTH = require("../lib/SortableTH");
+var shallow = require("enzyme").shallow;
 
 var renderer = TestUtils.createRenderer();
 var LABEL = "test label";
@@ -60,4 +62,18 @@ test("lib/SortableTH - on second click", function (assert) {
   var props = { label: LABEL, field: FIELD, orderBy: FIELD +" ASC", onClick: onClick };
   renderer.render(React.createElement(SortableTH, props));
   renderer.getRenderOutput().props.onClick();
+});
+
+test("lib/SortableTH - enable / disable", function (assert) {
+  var props = { label: LABEL, field: FIELD, orderBy: FIELD +" ASC", onClick: function () { } };
+  var wrapper = shallow(React.createElement(SortableTH, props));
+  assert.equal(wrapper.find(".sortable").length, 1, "One item with sortable CSS class");
+  assert.notEqual(wrapper.prop("onClick"), undefined, "Has onClick event");
+  assert.equal(wrapper.find("span.glyphicon-triangle-bottom").length, 1, "Has triangle icon");
+  props.enabled = false;
+  wrapper = shallow(React.createElement(SortableTH, props));
+  assert.equal(wrapper.find(".sortable").length, 0, "No CSS class");
+  assert.equal(wrapper.prop("onClick"), undefined, "No onClick event");
+  assert.equal(wrapper.find("span.glyphicon-triangle-bottom").length, 0, "No triangle icon");
+  assert.end();
 });
