@@ -57,6 +57,16 @@ Bare in mind that only the **last** changing event will get fired. If you type t
 ### Select
 
 ```javascript
+const person = { name: "John", gender: "MALE" };
+const genders = [ "FEMALE", "MALE" ];
+
+<Select object={person} field="gender" options={genders} null="- Gender -" />
+```
+
+Or, to use some more funcy labels in the UI and ugly values stored in the database
+you may do this:
+
+```javascript
 const person = { name: "John", gender: "M" };
 const genders = [{label: "Male", value: "M"}, {label: "Female", value: "F"}];
 
@@ -70,6 +80,14 @@ used if you want to add a first option with null value.
 
 If you want to provide an array of objects, and use certain fields as value and
 label, do this:
+
+```javascript
+const titles = [{id: 1, name: "Mr."}, {id: 2, name: "Mrs."}, ...];
+const person = {name: "Tom", titleId: 1};
+
+<Select 	object={person} field="titleId" options={titles} null="- Title -"
+			optionsFields={{value: "id", label: "name"}} />
+```
 
 #### onChangeObject
 

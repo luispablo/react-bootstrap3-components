@@ -39,6 +39,20 @@ test("lib/Select - order by label", function (assert) {
 	assert.end();
 });
 
+test("lib/Select - with array of string", function (assert) {
+	var selectProps = {object: person, field: "gender", options: ["FEMALE", "MALE"], null: "- Gender -" };
+	var renderer = TestUtils.createRenderer();
+	renderer.render(React.createElement(Select, selectProps));
+
+	var options = renderer.getRenderOutput().props.children;
+
+	assert.equal(options[1].props.children, "FEMALE");
+	assert.equal(options[1].props.value, "FEMALE");
+	assert.equal(options[2].props.children, "MALE");
+	assert.equal(options[2].props.value, "MALE");
+	assert.end();
+});
+
 test("lib/Select - onChangeObject without optionsFields", function (assert) {
 	var props = { object: person, field: "gender", options: genders };
 
