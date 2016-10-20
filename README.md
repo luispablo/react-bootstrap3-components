@@ -264,6 +264,25 @@ You can use the _static_ property to generate a static input component
 <HorizontalFormItem label="Name" staticValue="Tom" labelWidth={3} inputWidth={9} />
 ```
 
+#### Show required condition (asterisk)
+
+If you want to add an asterisk to show which fields are required, use the _showRequired_
+property.
+
+```javascript
+<HorizontalFormItem label="Name" staticValue="Tom" labelWidth={3} inputWidth={9} showRequired={true}>
+  ...
+</HorizontalFormItem>
+```
+
+this will generate
+
+```html
+<label class="control-label col-sm-4"><span class="required-asterisk">*</span>Name</label>
+```
+
+and then is up to you how you define the ```span.required-asterisk { } ``` CSS.
+
 #### Validation state
 
 You can provide validation info to build the Bootstrap validation state properties of this component (http://getbootstrap.com/css/#forms-control-validation)

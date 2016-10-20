@@ -21,7 +21,7 @@ test("lib/HorizontalFormItem - renders", function (assert) {
 	assert.equal(div.props.className, "form-group", "Bootstrap CSS class");
 	assert.equal(label.type, "label", "First child the label");
 	assert.equal(label.props.className, "control-label col-sm-2", "label CSS classes");
-	assert.equal(label.props.children, props.label, "The label text");
+	assert.equal(label.props.children[1], props.label, "The label text");
 	assert.equal(inputDiv.type, "div", "The input container is a DIV");
 	assert.equal(inputDiv.props.className, "col-sm-10", "input DIV CSS class");
 	assert.end();
@@ -42,6 +42,22 @@ test("lib/HorizontalFormItem - validation", function (assert) {
 	assert.equal(span.props.className, "help-block", "CSS class for helper block");
 	assert.equal(span.props.children, validation.message, "The validation message given");
 	assert.end();
+});
+
+test("lib/HorizontalFormItem - showRequired", function (assert) {
+  var input = React.createElement(Input, { type: "text", object: person, field: "name" });
+  var props = { label: "Name", labelWidth: 2, inputWidth: 10, showRequired: true };
+  var hfi = React.createElement(HorizontalFormItem, props, input);
+  renderer.render(hfi);
+
+  var div = renderer.getRenderOutput();
+  var label = div.props.children[0];
+  var span = label.props.children[0];
+
+  assert.equal(span.type, "span", "The asterisk SPAN");
+  assert.equal(span.props.className, "required-asterisk", "The asterisk CSS class");
+  assert.equal(span.props.children, "*", "The SPAN content");
+  assert.end();
 });
 
 test("lib/HorizontalFormItem - static", function (assert) {
