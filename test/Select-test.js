@@ -53,6 +53,21 @@ test("lib/Select - with array of string", function (assert) {
 	assert.end();
 });
 
+test("lib/Select - onChangeObject with null value", function (assert) {
+  var nullLabel = "-";
+	var props = { object: person, field: "gender", options: genders, null: nullLabel };
+
+	assert.plan(1);
+	props.onChangeObject = function (newPerson) {
+		assert.equal(newPerson.gender, null, "The gender should be null and not -");
+	};
+
+	var renderer = TestUtils.createRenderer();
+	renderer.render(React.createElement(Select, props));
+	var select = renderer.getRenderOutput();
+	select.props.onChange({ target: { value: nullLabel }});
+});
+
 test("lib/Select - onChangeObject without optionsFields", function (assert) {
 	var props = { object: person, field: "gender", options: genders };
 
