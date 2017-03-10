@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap3-components",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "description": "Some small and simple React components to reduce your bootstrap HTML",
   "main": "index.js",
   "scripts": {

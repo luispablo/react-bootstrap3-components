@@ -54,6 +54,23 @@ Bare in mind that only the **last** changing event will get fired. If you type t
 // The onChangeHandler will be debounced 300 milliseconds here
 ```
 
+### Generic debounce
+
+You can use the **debounce** function when you want to delay any action. For instance, you don't want to re-render a form until the user stops typing, but you want to do it for the entire form instead of applying it to each UI component (which could end up in a race condition between them)
+
+```javascript
+import { debounce } from "react-bootstrap3-components";
+
+...
+
+const onChangeObject = function (obj) {
+	// your code here
+};
+
+// To delay onChange 300 milliseconds do:
+<input type="text" onChange={debounce(onChangeObject, 300)} />
+```
+
 ### Select
 
 ```javascript
